@@ -14,11 +14,19 @@ export  class ShoppingListService{
   {
       alert('onIngredientAdded');
       this.ingredients.push(ingredient);
-      this.ingredientAdded.emit(this.ingredients.slice());
+      this.ingredientAdded.emit(this.ingredients);
   }
 
  getShoppingList(){
     return this.ingredients.slice();
  }
+ onIngredientsAdded(ingredients: Ingredient[])
+  {
+      alert('onIngredientsAdded');
+      this.ingredients.push(...ingredients);
+     // this.ingredientAdded.emit(...this.ingredients.slice);
+     this.ingredientAdded.emit(this.ingredients);
+
+  }
 
 }

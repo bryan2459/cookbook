@@ -1,8 +1,9 @@
 import { Recipe } from './recipe.model';
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
+import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
-
+@Injectable()
 export class RecipeService{
   private recipes: Recipe[] = [
     new Recipe('A steak recipe',
@@ -15,7 +16,9 @@ export class RecipeService{
     'Simply a best soup',
     'https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
     [ new Ingredient('oninion',1),
-    new Ingredient('potateo',10)
+      new Ingredient('potateo',10),
+      new Ingredient('parsley', 3),
+      new Ingredient('garlic',4)
     ]),
     new Recipe('A steak2 recipe',
     'Simply a best steak2',
@@ -27,15 +30,21 @@ export class RecipeService{
     'Simply a best bangers',
     'https://image.shutterstock.com/image-photo/fried-sausages-spices-sauce-tomatoes-600w-1838761069.jpg',
     [ new Ingredient('Saugages',12),
-     new Ingredient('French fries',10)
+      new Ingredient('French fries',10)
     ]),
 
  ];
+
+ constructor(private shoppingListService: ShoppingListService){}
 
  recipeSelected = new EventEmitter<Recipe>();
 
  getRecipes(){
     return this.recipes.slice();
+ }
+
+ addIngredientsToShoppingList(ingredients: Ingredient[]){
+     this.shoppingListService.onIngredientsAdded(ingredients);
  }
 
 
